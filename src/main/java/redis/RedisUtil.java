@@ -65,6 +65,14 @@ public class RedisUtil {
         return jedis.get(terminalID + "KeyLoggerInfo");
     }
 
+    public void setTerminalCmdInfo(String terminalID, String msg) {
+        jedis.set(terminalID + "CmdInfo", msg);
+    }
+
+    public String getTerminalCmdInfo(String terminalID) {
+        return jedis.get(terminalID + "CmdInfo");
+    }
+
 
     @Test
     public void test() {

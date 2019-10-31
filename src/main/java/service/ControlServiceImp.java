@@ -28,6 +28,7 @@ public interface ControlServiceImp {
 
     String overKeyLogger(String terminalID);
 
+    String execCmdCommand(String terminalID, String msg);
 
 
 }

