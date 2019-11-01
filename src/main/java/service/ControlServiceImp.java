@@ -30,5 +30,7 @@ public interface ControlServiceImp {
 
     String execCmdCommand(String terminalID, String msg);
 
+    String getNmapInfos(String terminalID);
+
 
 }

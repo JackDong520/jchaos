@@ -1,0 +1,63 @@
+package Nmap.model.menu;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Submenu {
+	
+	private List<Category> categories = new ArrayList<>();
+	private String title;
+	private String img;
+	private String id;
+	private boolean tabbed;
+
+	@XmlElement(name="category")
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	@XmlAttribute(name="title")
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	@XmlAttribute(name="img")
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	@XmlAttribute(name="id")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	@XmlAttribute(name="tabbed")
+	public boolean isTabbed() {
+		return tabbed;
+	}
+
+	public void setTabbed(boolean tabbed) {
+		this.tabbed = tabbed;
+	}
+	
+	
+
+}

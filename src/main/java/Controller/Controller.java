@@ -89,4 +89,12 @@ public class Controller {
         System.out.println(msg);
         return "" + controlService.execCmdCommand(terminalid, msg);
     }
+
+    @RequestMapping("/getNmapInfo")
+    public String getNmapInfo(@RequestParam(value = "terminalid", defaultValue = "127.0.0.1") String terminalid
+    ) {
+        System.out.println("run terminal:" + terminalid + ":execCmdCommand");
+
+        return "" + controlService.getNmapInfos(terminalid);
+    }
 }

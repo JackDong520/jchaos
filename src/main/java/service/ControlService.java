@@ -124,6 +124,14 @@ public class ControlService implements ControlServiceImp {
         return redisUtil.getTerminalCmdInfo(terminalID);
     }
 
+    @Override
+    public String getNmapInfos(String terminalID) {
+        socketInfo.setResultMsg("");
+        socketInfo.setResultCode(Config.Request_Code_GetNmapInfo);
+        sendMesg(terminalID, gson.toJson(socketInfo));
+        return null;
+    }
+
 
     public static void main(String[] args) throws InterruptedException, UnknownHostException {
         ControlService controlService = new ControlService();
